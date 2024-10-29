@@ -55,7 +55,7 @@ rectangle intersection(rectangle r1, rectangle r2) {
       ans.height=0;
       return ans;}
   if(((tem == r2.x)&&(r1.x > r2.x + r2.width))||((temy==r2.y)&&(r1.y > r2.y + r2.height))){
-      ans.width=0;//位置交换
+      ans.width=0;//位置交换1212
       ans.height=0;
       return ans;}
   
