@@ -51,21 +51,21 @@ rectangle intersection(rectangle r1, rectangle r2) {
   tem= min(r1.x,r2.x);
   temy=min(r1.y,r2.y);
   if (((tem == r1.x)&&(r2.x > r1.x + r1.width))||((temy==r1.y)&&(r2.y > r1.y + r1.height))){
-      ans.width=0;
+      ans.width=0;//限制一个  然后比较
       ans.height=0;
       return ans;}
   if(((tem == r2.x)&&(r1.x > r2.x + r2.width))||((temy==r2.y)&&(r1.y > r2.y + r2.height))){
-      ans.width=0;
+      ans.width=0;//位置交换
       ans.height=0;
       return ans;}
   
  
-
-  int minheight=min(r1.y+r1.height,r2.y+r2.height);
-  int minwidth=min(r1.x+r1.width,r2.x+r2.width);
+//排除了非重合之后
+  int minheight=min(r1.y+r1.height,r2.y+r2.height);//取低低
+  int minwidth=min(r1.x+r1.width,r2.x+r2.width);//低宽
   ans.height=minheight - ans.y;
   if(minheight <0) ans.height=minheight + ans.y;
-  
+  //定位重合矩形的边界条件
   ans.width=minwidth-ans.x;
   if (minwidth < 0 ) ans.width=minwidth+ans.x;
   return ans;
