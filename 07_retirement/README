@@ -1,87 +1,69 @@
- For this problem, you will be writing a "retirement savings" calculator.
- We'll remove the effects of inflation by keeping everything in 
- "today's dollars" and using a "Rate of return" that is in terms of
- "more than inflation."
- 
- 1. Create a file called "retirement.c".  Include the usual header
-    files (stdlib.h and stdio.h) at the top.
+任务说明
+创建 retirement.c 文件
+在文件顶部包含标准头文件 stdlib.h 和 stdio.h。
 
- 2. We're going to model both savings (while working) and expenditure
-    (while retired).  It turns out that both of these require the
-    same basic information, so we will make a struct to represent that.
-    Declare a struct _retire_info which has three fields: 
-       (1) an int called "months" for the number of months it is applicable to, 
-       (2) a double called "contribution" for how many dollars
-           are contributed (or spent if negative) from the account per month 
-       (3) a double called "rate_of_return" for the rate of returns 
-           (which we will assume to be "after inflation").  
+定义退休信息结构体
+因为储蓄（工作期间）和支出（退休期间）都需要相同的基本信息，所以创建一个结构体来表示这些信息。
+声明结构体 _retire_info，包含以下三个字段：
 
-    After you have declared this struct, use typedef to make "retire_info"
-    another name for this struct.
- 
- 3. Write the function 
-      void retirement (int startAge,   //in months
-                       double initial, //initial savings in dollars
-                       retire_info working, //info about working
-                       retire_info retired) //info about being retired
+一个 int 类型的字段，名为 months，表示适用的月份数。
+一个 double 类型的字段，名为 contribution，表示每月的存款（若为负数则为支出）。
+一个 double 类型的字段，名为 rate_of_return，表示回报率（假设为“扣除通货膨胀后的”）。
+声明结构体后，使用 typedef 使 retire_info 成为该结构体的类型名。
 
-   This function should perform two tasks (which are similar---look
-   for a chance to abstract something out into a function!).
-  
-   First, it should compute your retirement account balance each 
-   month while you are working.  To do this, you need to calculate
-   the account balance increase from returns (balance * rate of return),
-   and add that to the current balance.  You then need to add the
-   monthly contribution to the balance.
-   For example, if you have $1,000 in the account, earn a 0.5% rate of
-   return per month, and contribute $100 per month, you would
-   cmopute 1000 * 0.005 = $5 in interest earned.  You would then
-   add this plus the monthly contribution to the balance to end up
-   with $1105 in the account at the end of the month.
+编写 retirement 函数
+定义以下函数：
 
-   At the start of each month (before the balance changes), you should
-   print out the current balance with the following format:
-    "Age %3d month %2d you have $%.2lf\n"
-   The first two format conversions are the savers age in years and months.
-   The third format conversion is the account balance
-   This calculation goes on for the number of months specified 
-   in the "working" retire_info structure.  
+c
+复制代码
+void retirement (int startAge,   //以月为单位的起始年龄
+                 double initial, //以美元为单位的初始储蓄
+                 retire_info working, //关于工作期间的信息
+                 retire_info retired) //关于退休期间的信息
+该函数执行两个任务（类似的任务，可以考虑将其中相似的部分抽象成一个函数）：
 
- 
-   Second, you should perform a very similar calculation for each
-   month of retirment.  The difference here is that you will use the
-   information in the "retired" retire_info structure instead
-   of the information in the "working" structure.  As with
-   working, you should print out the same information as before.
+工作期间的储蓄计算
+每月计算你的退休账户余额，具体计算如下：
 
-   [Hint: since you are performing a very similar computation,
-    think about how you can abstract that part out into a function,
-    and re-use it, rather than re-writing it]  
+计算当前余额的收益增长（balance * rate of return），并将其加到当前余额上。
+每月将存款金额加到余额上。
+例如，若账户有 $1000，月回报率为 0.5%，每月存款 $100，那么计算如下：
+$1000 * 0.005 = $5（获得的利息）
+将利息和每月存款相加，余额变为 $1105。
+每个月的开始时（余额变动之前），打印当前余额，格式如下：
 
- 4. Write a main function which computes the retirement assuming
-     Working:
-     --------
-      Months: 489
-      Per Month Savings: $1000
-      Rate of Return:  4.5% per year ( 0.045/12 per month) 
-                       [above inflation]
-    Retired:
-    --------
-      Months: 384
-      Per Month Spending: -4000
-      Rate of Return: 1% per year ( 0.01/12 per month) 
-                      [above inflation]
-    Starting conditions:
-    -------------------
-       Age: 327 months (27 years, 3 months)
-       Savings: $21,345
-  5. Compile your code (we provided a Makefile) and test
-     it (we provided the output: retirement_ans.txt).
+plaintext
+复制代码
+Age %3d month %2d you have $%.2lf\n
+前两个格式转换为储蓄者的年龄（年和月）
+第三个格式转换为账户余额
+此计算持续“working”结构体中指定的月数。
+退休期间的支出计算
+每月进行类似的计算，区别在于这里使用“retired”结构体中的信息。
+同样需要打印和工作期间相同的信息。
 
-  6. Submit retirement.c
+提示：既然这两个计算非常相似，可以考虑将相同的部分抽象成一个函数，以避免重复编写代码。
 
+编写 main 函数
+计算假设的退休计划，参数如下：
 
-     
+工作期间
 
+月数：489
+每月存款：$1000
+回报率：每年 4.5%（每月 0.045/12）
+退休期间
 
-  
+月数：384
+每月支出：-4000
+回报率：每年 1%（每月 0.01/12）
+起始条件
+
+年龄：327 个月（27 岁零 3 个月）
+储蓄：$21,345
+编译并测试代码
+使用提供的 Makefile 编译代码，并使用提供的 retirement_ans.txt 进行对比测试。
+
+提交代码
+提交完成的 retirement.c 文件。
+
