@@ -1,70 +1,47 @@
-For this assignment, you will be practicing with the basics
-of gdb.  You will want to use gdb extensively during the rest
-of the semester, as it is an incredibly useful tool to gather
-information during the debugging process.  For now, we 
-are just going to get started with some basic commands.
-Be sure you have done the readings and watched
-the video on gdb. 
+这是一个关于练习使用 gdb（GNU Debugger）的作业说明。以下是翻译内容：
 
-Enclosed, you will find game.c and the compiled
-binary game, for the most boring guessing game
-ever.  In the first round, the program thinks
-of a secret number (it is the same every single time),
-and asks you to guess it.  You get exactly one try.
-Note that it thinks of this number by calling
-getSecretNumber, which is not included in the source.
 
-If you get that right, in the second round,
-it thinks of another number.  It does this by repeatedly
-calling getOtherSN (also not shown in the source) and
-passing in different numbers.  It combines these results
-together, and does some math to combine the results into
-"total".  Afterwards, it asks you for your guess,
-and again, you have one chance.
+---
 
-Before you proceed, try to "play" the game once by running:
+任务说明
+
+在本次作业中，您将练习 gdb 的基础使用。gdb 是一个在调试过程中收集信息的非常有用的工具，您在本学期后续内容中将频繁使用它。目前我们仅从一些基本命令开始。请确保您已完成关于 gdb 的阅读和视频学习。
+
+您会收到 game.c 和已编译的 game 二进制文件，这是一个非常无聊的猜数字游戏。在第一轮中，程序会想一个秘密数字（每次都是相同的），并要求您猜测。您只有一次机会。
+请注意，它通过调用 getSecretNumber 函数来确定该数字，而该函数的源码没有提供。
+
+如果您猜对了，程序进入第二轮，程序会再想一个数字。它通过多次调用 getOtherSN（同样未提供源码）并传入不同数字来确定此数字。然后，它会将这些结果结合起来，进行一些数学计算，将结果组合成一个变量 total。然后程序会要求您再次猜测，并且您仍然只有一次机会。
+
+在继续之前，先通过运行以下命令来“玩”一次游戏：
 
 ./game
 
+例如，我运行它并猜测 4：
 
-For example, I ran it and guessed 4:
 $ ./game 
 I'm thinking of a number...
 What number do you guess?
 4
 I'm sorry, that is not right.  You lose
 
-It would be pretty boring to play this game
-until you actually guess the right number and win,
-but fortunately, that isn't the point.  The
-point is to practice with gdb.
+要一次次玩这个游戏直到猜对并获胜会很无聊，但幸运的是，这不是重点。重点是练习使用 gdb。
 
-In emacs, do
+在 emacs 中执行以下命令：
 
 ESC-x gdb
 
-Emacs will prompt you for how to run gdb (the default should be fine),
-and then give you the gdb prompt.  
-Use the "start" commmand to begin execution, then use "next"
-and "print" to find the secret number for round 1.
-When the program prompts you for this number, you should be able
-to guess the right one from the information you gathered.
+Emacs 会提示您如何运行 gdb（默认选项即可），然后您会进入 gdb 的命令行界面。
+使用 start 命令开始执行程序，然后使用 next 和 print 命令找到第一轮的秘密数字。当程序提示您输入这个数字时，您可以根据收集的信息猜对这个数字。
 
-For round 2, you do not want to step through 5000+ iterations of the
-loop, so set a breakpoint after the loop, continue execution until you
-reach it, and the print out the variable "total".  Now you should
-be able to win round 2 instantly as well!
+对于第二轮，您不需要逐步执行 5000+ 次循环，因此可以在循环结束后设置一个断点，继续执行直到到达断点，然后打印变量 total。现在您应该可以立即赢得第二轮！
 
-Once you have found the two secret numbers, create a file called input.txt
-and place them in that file, one per line (round 1's secret number
-on the first line, and round 2's on the second line).
+找到这两个秘密数字后，创建一个名为 input.txt 的文件，将它们分别写在文件中的每一行（第一轮的秘密数字在第一行，第二轮的数字在第二行）。
 
-You should be able to run
+您可以运行以下命令：
 
 ./game < input.txt
 
-and "win" automatically.  That is, you should see this output (without
-having to type anything else):
+这将使您自动获胜。您应该看到以下输出（无需输入任何其他内容）：
 
 $ ./game < input.txt 
 I'm thinking of a number...
@@ -74,9 +51,10 @@ Ok, time for round 2. I have another secret number.
 Your guess:
 You win round 2 also!
 
-
-When you finish, add input.txt to git, then commit, push, and grade.
-
+完成后，将 input.txt 添加到 git 中，然后提交、推送并评分。
 
 
+---
+
+如果您在使用 gdb 或执行其他步骤时需要帮助，请随时询问！
 
