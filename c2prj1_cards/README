@@ -1,179 +1,74 @@
-At the end of each course, you will be working on building
-a program that estimates the chances of each hand
-winning in poker in a situation described by an input file.
+任务说明
+在本次项目的这一部分，您将编写一些与卡牌（具体来说，是一个表示卡牌的结构体）相关的函数：以人类可读的格式打印卡牌，将描述卡牌的字母对转换回结构体（用于从文件读取输入）等。
 
-In this portion of the project, you are going write some
-functions that work with cards (specifically, a struct
-that represents a card): printing them
-in human-readable format, converting the pair of letters
-that describe a card back into a struct (which gets
-used to read the input from a file), etc.
+为了完成项目，您将需要学习很多内容（例如，数组、字符串、动态内存分配、文件输入输出）。为了使您能够在完成项目后仍能运行扑克模拟，我们提供了后续部分的目标文件（.o）。包括的 Makefile 将在您执行以下命令时构建您的 cards.c 文件与我们的 .o 文件：
 
-There is a lot that will be required to complete
-the project that you will learn in the later
-courses (e.g., arrays, strings, dynamic memory allocation,
-file IO).  To make it so you can still run the poker
-simulation when you complete this project, we have provided
-object files (.o) for the later parts.  The included
-Makefile will build your cards.c with our .o files
-if you do:
-
+bash
+复制代码
 make poker
+您将在完成课程 3 和 4 后编写所有这些部分，并学习相应的概念。
 
-You'll write all these parts later on, when you
-finish Courses 3 and 4 and have learned the
-corresponding concepts.
+在此期间，您可以通过在 my-test-main.c 中编写任何代码来测试您的函数。如果您执行“make”（或“make test”），那么包含的 Makefile 将构建此文件并将其与您的 cards.o 链接（如有需要，将其编译）。
 
-In the meantime, you can test your functions
-for this assignment by writing any code you
-want in my-test-main.c.  If you do "make"
-(or "make test") then the included Makefile
-will build this and link it with your cards.o
-(compiling that if needed).
+开始
+首先，查看 cards.h 文件。
 
-To get started, take a look at cards.h.
+您将看到它开始定义一个枚举类型 suits（包含 SPADES、HEARTS、DIAMONDS 和 CLUBS）。这个枚举还定义了 NUM_SUITS，它的数值为 4（表示有多少种花色），也可以用来表示无效的花色。
 
-You will see that it starts by defining
-an enum suits (SPADES, HEARTS, DIAMONDS,
-and CLUBS).  This enum also has NUM_SUITS,
-which will have a numeric value of 4 (indicating
-how many suits there are), and can also
-be used to indicate an invalid suit.
 
-Next, you will see a struct for a card.
-This struct has two parts, a value
-(2,3,4,5,6,7,8,9,10,J,Q,K,A) and a suit (s,h,d,c).
-Following the struct declaration, there
-are some #defines for constants for
-the values of Ace, King, Queen, and Jack.
-Accordingly, a card's value should
-be between 2 and 14 (inclusive).
 
-There is also an enum for the hand
-ranking (what kind of poker hand you get).
-We won't be doing anything with these
-at this point, except for writing a function
-to convert from the enumerated values
-to a string.
+接下来，您会看到一个表示卡牌的结构体。该结构体有两个部分，一个是值（2、3、4、5、6、7、8、9、10、J、Q、K、A），另一个是花色（s、h、d、c）。在结构体声明后，有一些常量的 #define 定义了 A、K、Q 和 J 的值。因此，一张卡牌的值应在 2 到 14（包括这两个值）之间。
 
-Last are some function prototypes.
-You will write each of these in cards.c.
+此外，还有一个枚举类型用于手牌排名（您得到的扑克手牌类型）。在此阶段我们不会处理这些，只需要编写一个函数将枚举值转换为字符串。
 
-Now go into cards.c, and write each of these
-functions.  Here are the specifics: 
+最后是一些函数原型。您将在 cards.c 文件中编写以下函数：
 
-- void assert_card_valid(card_t c);
-  This function should use assert() to check
-  that the card passed in has valid values.
-  In particular, its value should be between
-  2 and VALUE_ACE (inclusive of both),
-  and its suit should be between SPADES
-  and CLUBS (inclusive of both).
 
-- const char * ranking_to_string(hand_ranking_t r);
-  This function should convert the
-  hand_ranking_t enumerated value passed
-  in to a string that describes it.  Remember
-  that Drew showed you a nice way to do this
-  with emacs keyboard macros!
+void assert_card_valid(card_t c);
+该函数应使用 assert() 检查传入的卡牌是否具有有效值。特别是，其值应在 2 到 VALUE_ACE（包括这两个值）之间，花色应在 SPADES 到 CLUBS（包括这两个值）之间。
 
-- char value_letter(card_t c);
-  This function should return the character that textually represents
-  the value of the passed-in card.  For values 2-9, this should
-  be that digit.  For 10, it should be '0', and for Jack, Queen, King, and Ace,
-  it should be 'J', 'Q', 'K', and 'A' respectively.
-  Hint: remember everything is a number.
-  For example, the character '0' has the decimal value 48,
-  and the character '5' has the decimal value 53, so you could represent
-  '5' as '0' + 5.
+const char * ranking_to_string(hand_ranking_t r);
+该函数应将传入的 hand_ranking_t 枚举值转换为描述它的字符串。记得 Drew 向您展示过一种使用 emacs 键盘宏的好方法来实现这一点！
 
-- char suit_letter(card_t c);
-  This function should return the letter that textually represents
-  the suit of the card passed in ('s', 'h', 'd', or 'c' for SPADES,
-  HEARTS, DIAMONDS, or CLUBS).
+char value_letter(card_t c);
+该函数应返回表示传入卡牌的字符。对于值 2-9，这应是该数字；对于 10，应为 '0'，对于 J、Q、K 和 A，分别应为 'J'、'Q'、'K' 和 'A'。提示：记住所有的值都是数字。例如，字符 '0' 的十进制值是 48，字符 '5' 的十进制值是 53，因此您可以将 '5' 表示为 '0' + 5。
 
-- void print_card(card_t c);
-  This function should print out the textual
-  representation of the card (hint: use the functions
-  you previously wrote). It should print
-  the value first, then the suit.  For example,
-  As  (for Ace of spades)
-  0d  (for 10 of diamonds)
-  Kc  (for King of clubs) etc.
-  This function should not print any additional
-  spaces or newlines after the card's text.
+char suit_letter(card_t c);
+该函数应返回表示卡牌花色的字符（'s'、'h'、'd' 或 'c'，分别对应 SPADES、HEARTS、DIAMONDS 和 CLUBS）。
 
-- card_t card_from_letters(char value_let, char suit_let);
-  This function should make and return a
-  card_t whose value and suit correspond
-  to the letters passed in. If the values passed
-  in are invalid, you should use assert()
-  or print an error message and exit(EXIT_FAILURE).
+void print_card(card_t c);
+该函数应打印卡牌的文本表示（提示：使用您之前编写的函数）。它应先打印值，然后打印花色。例如，As（表示黑桃 A），0d（表示方块 10），Kc（表示梅花 K）等。该函数不应打印额外的空格或换行符。
 
-- card_t card_from_num(unsigned c);
-  This function should take a number from 0 (inclusive)
-  to 52 (exclusive) and map it uniquely to
-  a card value/suit combination.  Exactly
-  how you map the numbers to values/suits
-  is up to you, but you must guarantee
-  that each valid value/suit combination
-  corresponds to exactly one input value
-  in the range [0,52). Hint: you may want to use the mod
-  operator % to find the remainder of a number divided by 13.
-  (In Course 3, this function will be used
-  to make a deck of cards by iterating
-  over that range and calling it once
-  for each value--you just need
-  to learn about arrays first so you
-  have a place to put all those
-  cards.)
+card_t card_from_letters(char value_let, char suit_let);
+该函数应创建并返回一个 card_t，其值和花色对应于传入的字母。如果传入的值无效，您应使用 assert() 或打印错误信息并退出程序（EXIT_FAILURE）。
 
-----------------------------------------------------
-Once you have done all of these (and tested
-them to your satisfaction with my-test-main.c),
-you can
+card_t card_from_num(unsigned c);
+该函数应接受一个介于 0（包括）到 52（不包括）之间的数字，并将其唯一映射到卡牌值/花色组合。如何将数字映射到值/花色组合由您决定，但必须保证每个有效的值/花色组合对应一个输入值在范围 [0,52) 中。提示：您可能希望使用模运算符 % 来找到数字除以 13 的余数。
 
+一旦您完成了所有这些（并使用 my-test-main.c 测试到您的满意），您可以运行以下命令：
+
+bash
+复制代码
 make poker
+并尝试扑克赔率计算。这需要一个命令行参数——要读取的输入文件。
 
-and try out the poker odds computation.  It
-requires one command line argument--the input file to read.
-In the input file,
-each line corresponds to one hand and lists
-the cards (with textual representation
-you were working with above).  It also
-has placeholders for future cards, which
-are a ? followed by a number.  For example,
-this input:
+在输入文件中，每行对应一手牌，列出卡牌（使用您之前处理的文本表示）。输入文件也有未来卡牌的占位符，用一个 ? 后面跟一个数字。例如，这个输入：
 
+ruby
+复制代码
 As Ah Kc Qd 6c ?0 ?1
 2c 3d Kc Qd 6c ?0 ?1
 Ks Qs Kc Qd 6c ?0 ?1
+描述了三手牌（可能发生在德州扑克中）。这三手牌共享梅花 K、方块 Q 和草花 6（称为“翻牌”——德州扑克中第三、第四和第五张牌）。每手牌都有自己的私牌（例如第一手有黑桃 A 和红心 A）。
 
-describes 3 hands (as might occur
-in a game of Texas Hold'em). All
-three hands share the King of clubs,
-the Queen of diamonds, and the 6
-of clubs (called the "flop"
-in Texas Hold'em--these are the
-3rd, 4th, and 5th cards).  Each
-hand has its own private cards
-to start (the first has the
-Ace of Spades and the Ace of Hearts,
-for example).
+剩下的牌将通过发两张更多的牌（?0 和 ?1）来玩，这些牌将被三手牌共享。
 
-The remainder of the hand will be
-played by dealing two more cards
-(?0 and ?1), which will be shared
-by the three hands.
+您也可以制作一个输入，其中每位玩家的牌都是私有的（没有共享牌），例如：
 
-You could also craft an input
-where each player's cards are private
-(no cards shared), such as this:
-
+ruby
+复制代码
 As Kh ?0 ?1 ?2
 Ac Kc ?3 ?4 ?5
 Ad Ah ?6 ?7 ?8
+9 张牌将留在未来（?0 到 ?8），每张牌恰好出现在一手牌中一次。
 
-9 cards remain in the future (?0
-through ?8), each appearing exactly
-once in one hand.

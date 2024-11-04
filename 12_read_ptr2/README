@@ -1,10 +1,24 @@
- 1. Execute the code in "test.c" by hand, and write the output
-    into a file called "answer.txt"
+作业步骤
+手动执行 test.c 代码
 
- 2. Create a Makefile to compile test.c into a program called "test"
-     
- 3. Run test and use its output to check your work.
+仔细阅读 test.c 文件中的代码，逐行理解每条语句的作用，预测代码运行后的输出。
+将您预测的输出写入文件 answer.txt。
+创建 Makefile 文件
 
- 4. Submit your Makefile and your answer.txt file
+创建一个名为 Makefile 的文件，用于编译 test.c 生成可执行文件 test。
+确保 Makefile 包含以下指令：
+makefile
+复制代码
+test: test.c
+	gcc -o test test.c
+这将使用 gcc 编译器将 test.c 编译为名为 test 的可执行文件。
+运行并验证输出
 
+编译完成后，运行生成的 test 程序：
+bash
+复制代码
+./test
+将程序实际输出与您在 answer.txt 中预测的输出进行比较，确保它们一致。如果有不一致之处，更新 answer.txt 以反映正确的输出。
+提交文件
 
+提交您创建的 Makefile 文件和 answer.txt 文件。

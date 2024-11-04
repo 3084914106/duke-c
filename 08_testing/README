@@ -1,32 +1,24 @@
-In this assignment, you will be black-box testing a few 
-broken implementations of "isPrime".  You will see
-that there are four broken implementations of isPrime:
+任务说明
+在本次作业中，您将对几个“isPrime”的破损实现进行黑箱测试。您将会看到四个破损的实现：
 
 isPrime-broken1
 isPrime-broken2
 isPrime-broken3
 isPrime-broken4
-
-as well as a correct implementation:
+以及一个正确的实现：
 
 isPrime-correct
+所有这些实现都接受一个命令行参数，即要测试的数字。
+例如，您可以运行：
 
-All of these take one command line argument, which is the number
-to test for primality.  For example, you might run
-
+bash
+复制代码
 $ ./isPrime-correct  3
 3 is prime
 $ ./isPrime-correct 4
 4 is not prime
+您的任务是为每个破损的实现找到一个测试用例，以显示它们不正确的地方——即它们的行为与 isPrime-correct 不同。
 
-Your job is to find a test case for each broken implementation which
-shows that it is not correct---that is, where its behavior differs
-from that of isPrime-correct.
+对于每个破损的程序，将导致其错误的输入写入名为 input.X 的文件中，其中 X 为 1、2、3 或 4（因此 input.1 包含显示 isPrime-broken1 破损的命令行参数）。
 
-For each broken program, write the input which breaks the program
-into a file called "input.X" where X is 1, 2, 3, or 4 (so input.1 has
-the command line argument that shows that isPrime-broken1 is broken).
-
-Note that isPrime-correct's behavior is considered correct, and
-any test case which deviates from it is considered wrong.
- 
+请注意，isPrime-correct 的行为被视为正确，任何偏离它的测试用例都被视为错误。

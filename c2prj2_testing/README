@@ -1,41 +1,30 @@
-The second part of this course's poker project is to write
-test cases for what you will do in the next course.
+任务说明
+在本课程的扑克项目的第二部分，您将为下一课程中将要完成的内容编写测试用例。在第3课程的项目中，您将编写代码来评估两手完整的扑克手牌之间哪一手获胜。这包括编写代码来确定手牌类型（如同花顺、满堂彩等），以及最终组成该手牌的5张牌。例如，若一手牌为：
 
-In particular, one of the things you will do in your
-project in Course 3 is write the code to evaluate
-which poker hand wins between two complete hands.
-This involves writing all the code to figure out
-what kind of hand (straight flush, full house, etc.)
-is in a hand, and which 5 cards ultimately make it up.
-For example, if one hand is
-
+r
+复制代码
 0c 0s 8s 7d 6d 6s 5c
+而另一手牌为：
 
-and the other is
-
+r
+复制代码
 Js 0s 8s 7d 6s 5c 4c
+在下一课程中，您的代码会识别出第一手牌是两对（10和6），带有一个8作为“踢脚牌”（用来打破平局的牌），而第二手牌是一个顺子（8 7 6 5 4）。顺子优于两对，因此第二手牌获胜。
 
-your code in the next course will figure out that
-the first hand has two pairs (10s and 6s) with an 8
-as the tie-breaking card (called the "kicker"),
-and that the second hand has a straight (8 7 6 5 4).
-The straight beats the two pairs, so hand 2 wins.
+我们为您提供了一个程序 test-eval，它会读取一个文件，该文件包含每行一对手牌，并输出该手牌的详细评估信息。每行的格式是：一手牌，分号，另一手牌。例如：
 
-We have provided you with test-eval, which reads
-a file containing lines with one pair of hands
-on each line and prints out the details of evaluating
-that hand.  Each line has one hand, a semi-colon,
-then the other hand, so the input for the above would
-be:
-
+r
+复制代码
 0c 0s 8s 7d 6d 6s 5c; Js 0s 8s 7d 6s 5c 4c
+我们已将此示例放入 example.txt 文件中。如果您运行：
 
-We have put this in example.txt.  If you run
-
+bash
+复制代码
 ./test-eval example.txt
+您将得到如下输出：
 
-Then you will get the following output:
-
+markdown
+复制代码
 Hand 1:
 --------
 0c 0s 8s 7d 6d 6s 5c 
@@ -57,60 +46,21 @@ Comparison :
 --------------
 Hand 2 wins!
 ============================
+可以看到，对于每手牌，程序不仅打印出总体排名（如 STRAIGHT、TWO_PAIR），还打印出决策过程中评估的各种部分：是否有同花？是否有顺子（如果有，在哪）？有多少相同的牌？等等。
 
-You can see that for each hand, this program not only prints
-the overall ranking (STRAIGHT, TWO_PAIR, etc), but also the
-results of various parts of the evaluation that went into
-the decision: Was there a flush?  Was there a straight (if
-so, where?) How many of a kind were there? etc.
+与其他测试作业一样，我们编写了一些破损的实现，并将它们放在 /usr/local/l2p/poker/ 中。您的目标是编写足够的测试用例在 tests.txt 中，以便识别我们提供的每个破损实现中的问题。
 
-As with other testing assignments, we have written
-some broken implementations and placed them in
-/usr/local/l2p/poker/
+您可以使用提供的 run_all.sh 脚本，将您的测试用例运行在所有实现上。
 
-Your goal is to write testcases in tests.txt
-that test this problem sufficiently to identify
-the problem in each broken implementation we provided.
+提示
+顺子较为复杂：考虑程序员在查找顺子时可能会出错的各种情况。这些问题可能包括找出是否存在顺子以及复制出组成顺子的牌（或同花顺的牌）。也可能存在一个“偏差一位”的错误，例如在手牌中查找顺子的起始位置时。
 
-You can use the run_all.sh script that we provided
-to run your test cases against all implementations.
+错误的思维方式：考虑程序员可能在思考时会错误地认为可以通过同时检查顺子和同花来判断同花顺，但这种方法在超过5张牌时并不正确（可能有些牌形成顺子，但其他牌具有相同的花色）。
 
-Here are some hints:
-====================
+基本情况覆盖：确保提供对每种基本情况的测试覆盖（如各种手牌类型）。
 
- - Straights are tricky. Think about various ways that a programmer
-   might mess up in finding a straight.  These problems could include
-   both figuring out if there is a straight as well as copying out the
-   cards that make up the straight (or straight flush).
+花色遍历：花色是数字，可以进行迭代。程序在遍历所有花色时会出现错误的可能性，尤其是在计数时。
 
-   There could even be an off-by-one bug in where to look for a straight
-   in the hand ("count from 0 to the number of cards in the hand minus
-   [something], call it i.  Check if a straight starts at position i"
-   In such an algorithm, [something] could be off by one)
-    
- - Think about ways in which a programmer might mis-think about what
-   they need to do.  For example, one might think you can check for a
-   straight flush by checking for a straight AND a flush, but that is
-   not correct (with more than 5 cards, you could have some that are a
-   straight but others of the same suit).
-   
- - Be sure to just provide simple coverage of the basic cases (each
-   type of hand outcome, etc).
+两对情况的微妙之处：在选择最终手牌的5张牌时，两对存在一些细微之处。记住，在平局判定中，最终的5张牌需要按特定顺序排列：（较大对子）（较小对子）（踢脚牌）。
 
- - The suits are numbers, and can be iterated across )where do you
-   think we iterate over all the suits?).  What if we counted wrong
-   when iterating over the suits?
-
-   
- - Two pairs have some subtle cases in terms of selecting the right 5
-   cards for the final hand.  Remember from the reading that the way
-   tie breaking works requires the final 5 card hand to be ordered:
-   (larger pair) (smaller pair) (tiebreaker)
-
- - Think about everywhere the programer could be off-by-one.
-   This might include such things as counting through all the
-   positions in the hand (either missing the start or the end),
-   or being off-by-one in how many cards are required
-   for a particular hand (e.g., only requiring 4
-   cards meet a particular condition instead of 5).
-   
+偏差一位的错误：考虑程序员可能会在很多地方出现“偏差一位”的错误。这可能包括遍历手牌位置（遗漏起点或终点），或在判断某种牌型时对牌数要求出现偏差（如要求4张牌符合条件，而不是5张）。

@@ -3,13 +3,13 @@
 
 
 int main(void) {
-  int anArray[] = {5,16,33,99};
-  int * p = anArray;
-  printf("*p = %d\n", *p);
+  int anArray[] = {5,16,33,99};//定义数组
+  int * p = anArray;//定义指针
+  printf("*p = %d\n", *p);//指向第一个
   p++;
   printf("Now *p = %d\n", *p);
-  int * q = &anArray[3];
-  int ** x = &q;
+  int * q = &anArray[3];//99    q为地址  *为访问
+  int ** x = &q;// 多一层解引用   取地址  一个指针指向地址
   **x = 12;
   *x = p;
   **x = 42;

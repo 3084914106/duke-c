@@ -1,26 +1,18 @@
-For this assignment, you will continue working on your blackbox testing
-skills.  However, this time, you will test a slightly more complex program
-with more broken implementations.
+任务说明
+在本次作业中，您将继续提高黑箱测试技能。不过，这一次，您将测试一个稍微复杂一些的程序，并且有更多的破损实现。
 
-You can find the correct implementation of the program at
+您可以在以下路径找到该程序的正确实现：
 
 /usr/local/l2p/match5/correct-match5
 
-This program determines who wins a very simple "card game".  This "game"
-is played with 5 "cards" per player and 2 players.  A "card" in this
-game is an ASCII character (so 'x' 'a' '!' '7' '$' etc are all valid cards).
-Each player has exactly 5 cards, and the player with the most matching
-cards wins.  That is, 5 of a kind beats 4 of a kind, which bests 3 of a kind,
-which beats a pair, which beats having no matching cards.  If both
-players have the same number of matching cards (e.g., both have 3 of a kind),
-the hand is a tie.  There are no tie breakers (so one player has
-3 of a kind and the other has 3 of a kind + a pair, the pair does not matter).
-The values of the cards don't matter (so three 'a's and three 'b's both tie).
+这个程序用于确定谁在一个非常简单的“纸牌游戏”中获胜。这个“游戏”由每位玩家5张“纸牌”进行，玩家有2个。游戏中的“纸牌”是ASCII字符（例如 'x'、'a'、'!'、'7'、'$' 等都是有效的纸牌）。每个玩家恰好有5张纸牌，拥有最多匹配纸牌的玩家获胜。也就是说，五张相同的纸牌胜过四张相同的，四张相同的胜过三张相同的，三张相同的胜过一对，而没有匹配纸牌的则是输。如果两个玩家的匹配纸牌数量相同（例如，两者都有三张相同的），则这一局平局。没有平局决胜规则（即一个玩家有三张相同的，另一个玩家有三张相同加一对，则这对不重要）。
 
-If you run the correct implementation, you can see the correct behavior:
+如果您运行正确的实现，您可以看到其正确的行为：
 
-As some examples:
+一些示例：
 
+bash
+复制代码
 $ /usr/local/l2p/match5/correct-match5 aaaaa bbbbb
 Both hands tie: each has five of a kind
 
@@ -29,36 +21,16 @@ Hand 1's five of a kind beats Hand 2's four of a kind
 
 $ /usr/local/l2p/match5/correct-match5 aaabb bbbbc
 Hand 1's three of a kind loses to Hand 2's four of a kind
+在 /usr/local/l2p/match5 中，您将看到有296个破损实现。请注意，您不需要为这296个测试用例提出测试案例——您可以通过一个测试案例来显示多个实现的错误。
 
-If you look in /usr/local/l2p/match5, you will see that there are 296 broken
-implementations.   Note that you do NOT need to come up with 296 test cases---you
-may have one test case which shows that several of these implementations
-are broken.
+为了帮助您使这次测试更可管理，我们提供了 run_all.sh，它将从您创建的文件 tests.txt 中读取测试案例，并将其运行于所有破损实现上。具体来说，tests.txt 中的每一行应该是对被测程序的一次调用的命令行参数。因此，如果您想用上面的三个示例测试程序，您可以在 tests.txt 中写入以下内容：
 
-Furthermore, to help make this testing managable for you, we have provided
-run_all.sh, which will read test cases from  a file you create called tests.txt,
-and run them against all broken implementations.  In particular, each line
-of tests.txt should be the command line arguments to one invocation of the
-program under test.  So if you wanted to test the program with the three
-examples shown above, you would write the following in tests.txt
-
+复制代码
 aaaaa bbbbb
 aaaaa bbbbc
 aaabb bbbbc
+然后，每个破损程序将运行三次，并与正确实现的行为进行比较。如果 tests.txt 中的任何测试案例识别了某个破损实现的问题，您的测试套件就成功了。您需要开发测试套件，以识别所有破损实现中的问题。
 
-and then each broken program would be run three times, and have its behavior
-compared to the correct implementation.  If ANY test case in tests.txt identifies
-a problem with a particular broken implementation, your test suite has
-succeeded for that particular implementation.  You need to develop
-your test suite so that it identifies the problems with all broken implementations.
+最后，我想提到的是，每个破损实现都是通过对正确实现进行小改动而产生的，这些改动可能代表程序编写中的合理错误（这被称为“变异测试”）。这些测试都不需要找到一个模糊的“魔法输入”——它们都可以通过合理而全面的测试套件找到。
 
-
-Lastly, I'll note that each of these broken implementations arises from
-making small changes in the correct implementation which could represent
-reasonable mistakes in programming (this is called "mutation testing" by
-the way).  None of these require finding
-an obscure "magic bullet" input---they can all be found with a reasonble,
-comprehensive test suite.
-
-You will submit tests.txt for this assignment.
-
+您将为本次作业提交 tests.txt。
